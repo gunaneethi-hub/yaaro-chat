@@ -904,6 +904,7 @@
       <div class="stranger-status" id="strangerStatus">Online · Anonymous</div>
     </div>
     <div class="header-actions">
+      <button class="hbtn" id="soundToggle" onclick="toggleSound()" title="Toggle sound">🔔</button>
       <button class="hbtn skip" onclick="skipStranger()">⟳ Skip</button>
       <button class="hbtn end" onclick="endChat()">✕ End</button>
     </div>
@@ -971,6 +972,41 @@
   let isConnected = false;
   let isTyping = false;
   let typingTimer = null;
+  let soundEnabled = true;
+  let audioCtx = null;
+
+  // ── Sound ──────────────────────────────────
+  function getAudioCtx() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    return audioCtx;
+  }
+
+  function playPing() {
+    if (!soundEnabled) return;
+    try {
+      const ctx = getAudioCtx();
+      // Two-note chime: C6 then E6
+      [[1046.5, 0], [1318.5, 0.12]].forEach(([freq, delay]) => {
+        const osc  = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.type = 'sine';
+        osc.frequency.value = freq;
+        const t = ctx.currentTime + delay;
+        gain.gain.setValueAtTime(0, t);
+        gain.gain.linearRampToValueAtTime(0.18, t + 0.01);
+        gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.35);
+        osc.start(t);
+        osc.stop(t + 0.36);
+      });
+    } catch (_) {}
+  }
+
+  function toggleSound() {
+    soundEnabled = !soundEnabled;
+    document.getElementById('soundToggle').textContent = soundEnabled ? '🔔' : '🔕';
+  }
 
   // ── Online count ───────────────────────────
   socket.on('onlineCount', (count) => {
@@ -999,6 +1035,7 @@
   // ── Messaging events ───────────────────────
   socket.on('message', ({ text }) => {
     addTheirMessage(text);
+    playPing();
   });
 
   socket.on('typing', ({ isTyping: theyTyping }) => {
