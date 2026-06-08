@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0e17">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
 <title>Yaaro.chat — Chat with a Stranger</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -405,6 +409,7 @@
   #chat {
     flex-direction: column;
     height: 100vh;
+    height: 100dvh;
     max-width: 700px;
     margin: 0 auto;
     width: 100%;
@@ -414,8 +419,9 @@
   .chat-header {
     display: flex;
     align-items: center;
-    gap: 12px;
-    padding: 14px 20px;
+    gap: 8px;
+    padding: 10px 14px;
+    padding-top: calc(10px + env(safe-area-inset-top));
     background: var(--bg2);
     border-bottom: 1px solid var(--border);
     flex-shrink: 0;
@@ -449,21 +455,22 @@
 
   .stranger-status { font-size: 12px; color: var(--text2); margin-top: 1px; }
 
-  .header-actions { display: flex; gap: 4px; }
+  .header-actions { display: flex; gap: 4px; flex-shrink: 0; }
 
   .hbtn {
     background: none;
     border: none;
     color: var(--text2);
     cursor: pointer;
-    padding: 8px 10px;
+    padding: 7px 10px;
     border-radius: 8px;
     font-size: 13px;
     font-family: 'Inter', sans-serif;
     transition: all 0.15s;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 4px;
+    white-space: nowrap;
   }
 
   .hbtn:hover { background: var(--bg3); color: var(--text); }
@@ -473,6 +480,8 @@
 
   .hbtn.end { color: var(--red); border: 1px solid rgba(231,76,60,0.2); }
   .hbtn.end:hover { background: rgba(231,76,60,0.1); }
+
+  #soundToggle { font-size: 15px; padding: 7px 8px; }
 
   /* Messages */
   .messages {
@@ -540,6 +549,8 @@
   .msg-body { max-width: 70%; }
 
   .bubble {
+    width: fit-content;
+    max-width: 100%;
     padding: 10px 14px;
     border-radius: 18px;
     font-size: 14px;
@@ -650,6 +661,7 @@
   /* Input */
   .input-area {
     padding: 12px 16px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
     background: var(--bg2);
     border-top: 1px solid var(--border);
     display: flex;
@@ -784,6 +796,10 @@
     .stats-row { gap: 16px; }
     .interest-card { padding: 28px 20px; }
     .hero h1 { letter-spacing: -1px; }
+    .hbtn { padding: 6px 8px; font-size: 12px; }
+    .hbtn.skip span, .hbtn.end span { display: none; }
+    .chat-logo { font-size: 16px; }
+    .stranger-name { font-size: 14px; }
   }
 </style>
 </head>
@@ -907,8 +923,8 @@
     </div>
     <div class="header-actions">
       <button class="hbtn" id="soundToggle" onclick="toggleSound()" title="Toggle sound">🔔</button>
-      <button class="hbtn skip" onclick="skipStranger()">⟳ Skip</button>
-      <button class="hbtn end" onclick="endChat()">✕ End</button>
+      <button class="hbtn skip" onclick="skipStranger()">⟳ <span>Skip</span></button>
+      <button class="hbtn end" onclick="endChat()">✕ <span>End</span></button>
     </div>
   </div>
 
