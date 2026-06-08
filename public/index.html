@@ -537,13 +537,15 @@
 
   .msg-avatar.hidden { visibility: hidden; }
 
+  .msg-body { max-width: 70%; }
+
   .bubble {
-    max-width: 68%;
     padding: 10px 14px;
     border-radius: 18px;
     font-size: 14px;
     line-height: 1.55;
-    word-break: break-word;
+    overflow-wrap: break-word;
+    word-break: normal;
   }
 
   .bubble.them {
@@ -1179,7 +1181,7 @@
     row.className = 'msg-row';
     row.innerHTML = `
       <div class="msg-avatar" style="background:#1a2438;font-size:16px">👤</div>
-      <div>
+      <div class="msg-body">
         <div class="bubble them">${esc(text)}</div>
         <div class="bubble-meta">${getNow()}</div>
       </div>`;
@@ -1193,7 +1195,7 @@
     const row    = document.createElement('div');
     row.className = 'msg-row me';
     row.innerHTML = `
-      <div>
+      <div class="msg-body">
         <div class="bubble me">${esc(text)}</div>
         <div class="bubble-meta">${getNow()} · ✓✓</div>
       </div>`;
