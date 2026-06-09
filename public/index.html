@@ -408,6 +408,7 @@
   ══════════════════════════════ */
   #chat {
     flex-direction: column;
+    min-height: unset;
     height: 100vh;
     height: 100dvh;
     max-width: 700px;
@@ -1480,15 +1481,39 @@
 
   // ── visualViewport sticky ───────────────────
   function initViewportHandler() {
-    if (!window.visualViewport) return;
-    const chat = document.getElementById('chat');
-    const handler = () => {
+    const chat   = document.getElementById('chat');
+    const msgInput = document.getElementById('msgInput');
+
+    const resize = () => {
       if (!chat.classList.contains('active')) return;
-      chat.style.height = window.visualViewport.height + 'px';
-      window.scrollTo(0, 0);
+      const vv = window.visualViewport;
+      const h  = vv ? vv.height : window.innerHeight;
+      chat.style.height = h + 'px';
+      // iOS shifts the layout viewport when keyboard opens — pin it back
+      if (vv && vv.offsetTop > 0) {
+        document.body.style.marginTop = (-vv.offsetTop) + 'px';
+      } else {
+        document.body.style.marginTop = '';
+      }
     };
-    window.visualViewport.addEventListener('resize', handler);
-    window.visualViewport.addEventListener('scroll', handler);
+
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', resize);
+      window.visualViewport.addEventListener('scroll', resize);
+    }
+    window.addEventListener('resize', resize);
+
+    // After keyboard fully opens, scroll input into view
+    msgInput.addEventListener('focus', () => {
+      setTimeout(() => {
+        msgInput.scrollIntoView({ block: 'end', behavior: 'smooth' });
+      }, 320);
+    });
+
+    // Reset height when keyboard closes
+    msgInput.addEventListener('blur', () => {
+      setTimeout(resize, 100);
+    });
   }
 
   initViewportHandler();
