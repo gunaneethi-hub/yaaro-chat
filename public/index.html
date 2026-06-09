@@ -583,6 +583,8 @@
 
   .msg-row.me .bubble-meta { justify-content: flex-end; }
 
+  .msg-link { color: inherit; text-decoration: underline; opacity: 0.85; word-break: break-all; }
+
   /* Typing indicator */
   .typing-row {
     display: flex;
@@ -658,32 +660,114 @@
 
   .qr:hover { border-color: var(--border2); color: var(--accent); }
 
+  /* Emoji picker */
+  .emoji-picker {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    padding: 10px 14px;
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .emoji-picker.open { display: flex; }
+
+  .emoji-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 2px;
+  }
+
+  .emoji-grid button {
+    background: none;
+    border: none;
+    font-size: 22px;
+    padding: 6px 4px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.1s;
+    line-height: 1;
+  }
+
+  .emoji-grid button:hover { background: var(--bg4); }
+
+  .emoji-category {
+    font-size: 10px;
+    color: var(--text3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 2px 0;
+  }
+
   /* Input */
+  .input-wrap {
+    position: relative;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .char-counter {
+    position: absolute;
+    right: 14px;
+    bottom: 10px;
+    font-size: 10px;
+    color: var(--text3);
+    pointer-events: none;
+    display: none;
+  }
+
+  .char-counter.warn { color: #e67e22; display: block; }
+  .char-counter.danger { color: var(--red); display: block; }
+
   .input-area {
-    padding: 12px 16px;
-    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    padding: 10px 14px;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
     background: var(--bg2);
     border-top: 1px solid var(--border);
     display: flex;
     align-items: flex-end;
-    gap: 10px;
+    gap: 8px;
     flex-shrink: 0;
   }
+
+  .emoji-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    font-size: 18px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.15s;
+    line-height: 1;
+  }
+
+  .emoji-btn:hover { background: var(--bg4); border-color: var(--border2); }
+  .emoji-btn.active { background: rgba(79,142,255,0.15); border-color: var(--accent); }
 
   .msg-input {
     flex: 1;
     background: var(--bg3);
     border: 1px solid var(--border);
     border-radius: 22px;
-    padding: 11px 18px;
+    padding: 10px 42px 10px 16px;
     color: var(--text);
     font-family: 'Inter', sans-serif;
     font-size: 14px;
     outline: none;
     resize: none;
+    min-height: 40px;
     max-height: 120px;
     line-height: 1.5;
     transition: border-color 0.2s;
+    overflow-y: hidden;
+    display: block;
   }
 
   .msg-input::placeholder { color: var(--text3); }
@@ -691,8 +775,8 @@
   .msg-input:disabled { opacity: 0.4; cursor: not-allowed; }
 
   .send-btn {
-    width: 44px;
-    height: 44px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background: var(--accent);
     border: none;
@@ -703,7 +787,7 @@
     justify-content: center;
     flex-shrink: 0;
     transition: all 0.15s;
-    font-size: 16px;
+    font-size: 15px;
   }
 
   .send-btn:hover { background: #3a7bef; transform: scale(1.05); }
@@ -940,7 +1024,7 @@
     </div>
   </div>
 
-  <div class="quick-replies">
+  <div class="quick-replies" id="quickReplies">
     <div class="qr" onclick="sendQuick('Hey! 👋')">Hey! 👋</div>
     <div class="qr" onclick="sendQuick('How are you?')">How are you?</div>
     <div class="qr" onclick="sendQuick('Where are you from?')">Where are you from?</div>
@@ -950,9 +1034,18 @@
     <div class="qr" onclick="sendQuick('That\'s interesting!')">That's interesting!</div>
   </div>
 
+  <div class="emoji-picker" id="emojiPicker">
+    <div class="emoji-category">Smileys</div>
+    <div class="emoji-grid" id="emojiGrid"></div>
+  </div>
+
   <div class="input-area">
-    <textarea class="msg-input" id="msgInput" placeholder="Type a message..." rows="1"
-      onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+    <button class="emoji-btn" id="emojiBtn" type="button" onclick="toggleEmojiPicker()">😊</button>
+    <div class="input-wrap">
+      <textarea class="msg-input" id="msgInput" placeholder="Type a message..." rows="1"
+        onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+      <span class="char-counter" id="charCounter"></span>
+    </div>
     <button class="send-btn" onclick="sendMessage()">➤</button>
   </div>
 </div>
@@ -1139,14 +1232,84 @@
     }
   }
 
-  // ── Input helpers ──────────────────────────
+  // ── Emoji picker ───────────────────────────
+  const EMOJIS = [
+    '😀','😂','🥲','😍','🥰','😎','🤩','😭',
+    '😅','🤔','🙄','😏','😤','😢','😡','🤗',
+    '😴','🥳','😈','🤣','😇','🫡','🫠','🥺',
+    '👍','👎','👋','🙌','🤝','✌️','🤞','💪',
+    '🫶','👏','🙏','🤙','❤️','🔥','💯','✨',
+    '🎉','💀','👀','💔','⭐','🌙','🎵','🎮',
+    '😆','😜','🤪','😋','🤑','🥸','🤓','😶',
+    '🫢','🫣','🤭','😱','🥶','🤢','🤮','😷',
+  ];
+
+  function buildEmojiGrid() {
+    const grid = document.getElementById('emojiGrid');
+    if (!grid || grid.children.length) return;
+    EMOJIS.forEach(em => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = em;
+      btn.onclick = () => insertEmoji(em);
+      grid.appendChild(btn);
+    });
+  }
+
+  function toggleEmojiPicker() {
+    buildEmojiGrid();
+    const picker = document.getElementById('emojiPicker');
+    const btn    = document.getElementById('emojiBtn');
+    const open   = picker.classList.toggle('open');
+    btn.classList.toggle('active', open);
+    if (open) {
+      // hide quick replies to save space
+      const qr = document.getElementById('quickReplies');
+      if (qr) qr.style.display = 'none';
+    } else {
+      const qr = document.getElementById('quickReplies');
+      if (qr) qr.style.display = '';
+    }
+  }
+
+  function closeEmojiPicker() {
+    const picker = document.getElementById('emojiPicker');
+    const btn    = document.getElementById('emojiBtn');
+    if (!picker) return;
+    picker.classList.remove('open');
+    btn.classList.remove('active');
+    const qr = document.getElementById('quickReplies');
+    if (qr) qr.style.display = '';
+  }
+
+  function insertEmoji(em) {
+    const input = document.getElementById('msgInput');
+    if (!input || input.disabled) return;
+    const start = input.selectionStart;
+    const end   = input.selectionEnd;
+    input.value = input.value.slice(0, start) + em + input.value.slice(end);
+    input.selectionStart = input.selectionEnd = start + em.length;
+    input.focus();
+    autoResize(input);
+    closeEmojiPicker();
+  }
+
+  // ── Input helpers ───────────────────────────
   function resetInput() {
     const input = document.getElementById('msgInput');
     const btn   = document.querySelector('.send-btn');
-    if (input) { input.disabled = false; input.value = ''; input.style.height = 'auto'; }
-    if (btn)   btn.disabled = false;
+    if (input) {
+      input.disabled = false;
+      input.value = '';
+      input.style.height = '';
+      input.style.overflowY = 'hidden';
+    }
+    if (btn) btn.disabled = false;
+    updateCharCounter('');
+    closeEmojiPicker();
     isTyping = false;
     clearTimeout(typingTimer);
+    setTimeout(() => input && input.focus(), 100);
   }
 
   function disableInput() {
@@ -1154,7 +1317,31 @@
     const btn   = document.querySelector('.send-btn');
     if (input) input.disabled = true;
     if (btn)   btn.disabled = true;
+    closeEmojiPicker();
   }
+
+  function updateCharCounter(value) {
+    const el  = document.getElementById('charCounter');
+    if (!el) return;
+    const len = value.length;
+    el.textContent = len > 800 ? `${len}/1000` : '';
+    el.className = 'char-counter' + (len >= 950 ? ' danger' : len >= 800 ? ' warn' : '');
+  }
+
+  // ── visualViewport sticky ───────────────────
+  function initViewportHandler() {
+    if (!window.visualViewport) return;
+    const chat = document.getElementById('chat');
+    const handler = () => {
+      if (!chat.classList.contains('active')) return;
+      chat.style.height = window.visualViewport.height + 'px';
+      window.scrollTo(0, 0);
+    };
+    window.visualViewport.addEventListener('resize', handler);
+    window.visualViewport.addEventListener('scroll', handler);
+  }
+
+  initViewportHandler();
 
   // ── Messaging ─────────────────────────────
   function getNow() {
@@ -1198,7 +1385,7 @@
     row.innerHTML = `
       <div class="msg-avatar" style="background:#1a2438;font-size:16px">👤</div>
       <div class="msg-body">
-        <div class="bubble them">${esc(text)}</div>
+        <div class="bubble them">${linkify(esc(text))}</div>
         <div class="bubble-meta">${getNow()}</div>
       </div>`;
     area.insertBefore(row, typing);
@@ -1212,7 +1399,7 @@
     row.className = 'msg-row me';
     row.innerHTML = `
       <div class="msg-body">
-        <div class="bubble me">${esc(text)}</div>
+        <div class="bubble me">${linkify(esc(text))}</div>
         <div class="bubble-meta">${getNow()} · ✓✓</div>
       </div>`;
     area.insertBefore(row, typing);
@@ -1227,8 +1414,12 @@
     addMyMessage(text);
     socket.emit('message', { text });
     input.value = '';
-    input.style.height = 'auto';
+    input.style.height = '';
+    input.style.overflowY = 'hidden';
+    updateCharCounter('');
     emitTyping(false);
+    closeEmojiPicker();
+    input.focus();
   }
 
   function sendQuick(text) {
@@ -1239,11 +1430,17 @@
 
   function handleKey(e) {
     if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+    if (e.key === 'Escape') closeEmojiPicker();
   }
 
   function autoResize(el) {
-    el.style.height = 'auto';
-    el.style.height = Math.min(el.scrollHeight, 120) + 'px';
+    el.style.height = '';
+    el.style.overflowY = 'hidden';
+    const next = Math.min(el.scrollHeight, 120);
+    el.style.height = next + 'px';
+    el.style.overflowY = el.scrollHeight > 120 ? 'auto' : 'hidden';
+
+    updateCharCounter(el.value);
 
     const hasText = el.value.trim().length > 0;
     if (hasText) {
@@ -1311,6 +1508,13 @@
       .replace(/&/g, '&amp;')
       .replace(/</g, '&lt;')
       .replace(/>/g, '&gt;');
+  }
+
+  function linkify(s) {
+    return s.replace(
+      /(https?:\/\/[^\s<>"]+)/g,
+      '<a href="$1" target="_blank" rel="noopener noreferrer" class="msg-link">$1</a>'
+    );
   }
 </script>
 </body>
