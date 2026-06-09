@@ -18,6 +18,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // partners: Map<socketId, socketId>
 const queue    = [];
 const partners = new Map();
+const reports  = [];
 
 // ── Helpers ────────────────────────────────────────────────────────────────
 function generateId() {
@@ -124,6 +125,16 @@ io.on('connection', (socket) => {
   // User explicitly ends chat — notify partner, don't re-queue.
   socket.on('end', () => {
     leaveChat(socket, true);
+  });
+
+  // User reports their current partner.
+  socket.on('report', ({ reason } = {}) => {
+    const validReasons = ['Spam', 'Inappropriate', 'Harassment', 'Underage', 'Other'];
+    if (!validReasons.includes(reason)) return;
+    const reportedId = partners.get(socket.id);
+    reports.push({ reporterId: socket.id, reportedId: reportedId || null, reason, ts: Date.now() });
+    console.log(`[REPORT] ${socket.nickname} → ${reportedId || 'unknown'} | reason: ${reason}`);
+    socket.emit('reportAck');
   });
 
   // Browser tab closed / network drop.

@@ -481,7 +481,131 @@
   .hbtn.end { color: var(--red); border: 1px solid rgba(231,76,60,0.2); }
   .hbtn.end:hover { background: rgba(231,76,60,0.1); }
 
-  #soundToggle { font-size: 15px; padding: 7px 8px; }
+  .hbtn.report { color: var(--text3); font-size: 15px; padding: 7px 8px; }
+  .hbtn.report:hover { color: var(--red); background: rgba(231,76,60,0.08); }
+
+  /* Report modal */
+  .report-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .report-overlay.open { display: flex; }
+
+  .report-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 28px 24px;
+    width: 100%;
+    max-width: 360px;
+    animation: fadeUp 0.2s ease both;
+  }
+
+  .report-card h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .report-card p {
+    font-size: 13px;
+    color: var(--text2);
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  .report-reasons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+
+  .reason-chip {
+    padding: 8px 14px;
+    border-radius: 100px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border: 1px solid var(--border);
+    background: var(--bg3);
+    color: var(--text2);
+    transition: all 0.15s;
+    user-select: none;
+  }
+
+  .reason-chip:hover { border-color: rgba(231,76,60,0.4); color: var(--text); }
+
+  .reason-chip.selected {
+    background: rgba(231,76,60,0.12);
+    border-color: var(--red);
+    color: var(--red);
+  }
+
+  .report-actions { display: flex; gap: 8px; }
+
+  .btn-report-submit {
+    flex: 1;
+    padding: 12px;
+    border-radius: 10px;
+    background: var(--red);
+    color: #fff;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s;
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  .btn-report-submit.ready { opacity: 1; pointer-events: auto; }
+  .btn-report-submit.ready:hover { background: #c0392b; }
+
+  .btn-report-cancel {
+    padding: 12px 18px;
+    border-radius: 10px;
+    background: var(--bg3);
+    color: var(--text2);
+    border: 1px solid var(--border);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .btn-report-cancel:hover { background: var(--bg4); }
+
+  .report-confirm {
+    text-align: center;
+    padding: 12px 0 4px;
+    font-size: 14px;
+    color: var(--green);
+    display: none;
+  }
+
+  .report-link {
+    background: none;
+    border: none;
+    color: var(--text3);
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+    margin-top: 4px;
+  }
+
+  .report-link:hover { color: var(--red); }
 
   /* Messages */
   .messages {
@@ -1006,7 +1130,7 @@
       <div class="stranger-status" id="strangerStatus">Online · Anonymous</div>
     </div>
     <div class="header-actions">
-      <button class="hbtn" id="soundToggle" onclick="toggleSound()" title="Toggle sound">🔔</button>
+      <button class="hbtn report" onclick="openReportModal()" title="Report stranger">🚩</button>
       <button class="hbtn skip" onclick="skipStranger()">⟳ <span>Skip</span></button>
       <button class="hbtn end" onclick="endChat()">✕ <span>End</span></button>
     </div>
@@ -1060,6 +1184,7 @@
     <button class="rate-btn good" onclick="rateChat('good')">👍</button>
     <button class="rate-btn bad" onclick="rateChat('bad')">👎</button>
   </div>
+  <button class="report-link" onclick="openReportModal()">🚩 Report this stranger</button>
 
   <div class="end-actions">
     <button class="btn-primary" style="justify-content:center" onclick="startConnecting()">
@@ -1074,6 +1199,26 @@
   </div>
 </div>
 
+<!-- ══ REPORT MODAL ══ -->
+<div class="report-overlay" id="reportOverlay" onclick="overlayClick(event)">
+  <div class="report-card">
+    <h3>Report Stranger 🚩</h3>
+    <p>Select a reason. Reports are anonymous and help keep Yaaro safe.</p>
+    <div class="report-reasons" id="reportReasons">
+      <div class="reason-chip" onclick="selectReason(this)">Spam</div>
+      <div class="reason-chip" onclick="selectReason(this)">Inappropriate</div>
+      <div class="reason-chip" onclick="selectReason(this)">Harassment</div>
+      <div class="reason-chip" onclick="selectReason(this)">Underage</div>
+      <div class="reason-chip" onclick="selectReason(this)">Other</div>
+    </div>
+    <div class="report-actions">
+      <button class="btn-report-cancel" onclick="closeReportModal()">Cancel</button>
+      <button class="btn-report-submit" id="reportSubmitBtn" onclick="submitReport()">Submit Report</button>
+    </div>
+    <div class="report-confirm" id="reportConfirm">✅ Report submitted. Thank you!</div>
+  </div>
+</div>
+
 <script src="/socket.io/socket.io.js"></script>
 <script>
   const socket = io();
@@ -1083,41 +1228,47 @@
   let isConnected = false;
   let isTyping = false;
   let typingTimer = null;
-  let soundEnabled = true;
-  let audioCtx = null;
+  let selectedReason = null;
+  let lastReportedId = null;
 
-  // ── Sound ──────────────────────────────────
-  function getAudioCtx() {
-    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    return audioCtx;
+  // ── Report modal ───────────────────────────
+  function openReportModal() {
+    selectedReason = null;
+    document.querySelectorAll('.reason-chip').forEach(c => c.classList.remove('selected'));
+    document.getElementById('reportSubmitBtn').classList.remove('ready');
+    document.getElementById('reportConfirm').style.display = 'none';
+    document.getElementById('reportOverlay').classList.add('open');
   }
 
-  function playPing() {
-    if (!soundEnabled) return;
-    try {
-      const ctx = getAudioCtx();
-      // Two-note chime: C6 then E6
-      [[1046.5, 0], [1318.5, 0.12]].forEach(([freq, delay]) => {
-        const osc  = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.type = 'sine';
-        osc.frequency.value = freq;
-        const t = ctx.currentTime + delay;
-        gain.gain.setValueAtTime(0, t);
-        gain.gain.linearRampToValueAtTime(0.18, t + 0.01);
-        gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.35);
-        osc.start(t);
-        osc.stop(t + 0.36);
-      });
-    } catch (_) {}
+  function closeReportModal() {
+    document.getElementById('reportOverlay').classList.remove('open');
   }
 
-  function toggleSound() {
-    soundEnabled = !soundEnabled;
-    document.getElementById('soundToggle').textContent = soundEnabled ? '🔔' : '🔕';
+  function overlayClick(e) {
+    if (e.target === document.getElementById('reportOverlay')) closeReportModal();
   }
+
+  function selectReason(el) {
+    document.querySelectorAll('.reason-chip').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedReason = el.textContent;
+    document.getElementById('reportSubmitBtn').classList.add('ready');
+  }
+
+  function submitReport() {
+    if (!selectedReason) return;
+    socket.emit('report', { reason: selectedReason });
+    document.getElementById('reportSubmitBtn').style.display = 'none';
+    document.getElementById('reportConfirm').style.display = 'block';
+    setTimeout(() => {
+      closeReportModal();
+      document.getElementById('reportSubmitBtn').style.display = '';
+    }, 2000);
+  }
+
+  socket.on('reportAck', () => {
+    // server confirmed — nothing extra needed, UI already shows confirmation
+  });
 
   // ── Online count ───────────────────────────
   socket.on('onlineCount', (count) => {
@@ -1146,7 +1297,6 @@
   // ── Messaging events ───────────────────────
   socket.on('message', ({ text }) => {
     addTheirMessage(text);
-    playPing();
   });
 
   socket.on('typing', ({ isTyping: theyTyping }) => {
