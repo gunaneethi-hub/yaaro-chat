@@ -407,10 +407,13 @@
      CHAT SCREEN
   ══════════════════════════════ */
   #chat {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     flex-direction: column;
     min-height: unset;
-    height: 100vh;
-    height: 100dvh;
     max-width: 700px;
     margin: 0 auto;
     width: 100%;
@@ -1480,40 +1483,28 @@
   }
 
   // ── visualViewport sticky ───────────────────
+  // position:fixed on #chat + adjust bottom = keyboard height.
+  // iOS: innerHeight stays fixed, visualViewport.height shrinks → diff = keyboard.
+  // Android: innerHeight already shrinks with keyboard → diff = 0, no adjustment needed.
   function initViewportHandler() {
-    const chat   = document.getElementById('chat');
+    const chat     = document.getElementById('chat');
     const msgInput = document.getElementById('msgInput');
 
-    const resize = () => {
+    const adjust = () => {
       if (!chat.classList.contains('active')) return;
       const vv = window.visualViewport;
-      const h  = vv ? vv.height : window.innerHeight;
-      chat.style.height = h + 'px';
-      // iOS shifts the layout viewport when keyboard opens — pin it back
-      if (vv && vv.offsetTop > 0) {
-        document.body.style.marginTop = (-vv.offsetTop) + 'px';
-      } else {
-        document.body.style.marginTop = '';
-      }
+      if (!vv) return;
+      const keyboardH = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+      chat.style.bottom = keyboardH + 'px';
     };
 
     if (window.visualViewport) {
-      window.visualViewport.addEventListener('resize', resize);
-      window.visualViewport.addEventListener('scroll', resize);
+      window.visualViewport.addEventListener('resize', adjust);
+      window.visualViewport.addEventListener('scroll', adjust);
     }
-    window.addEventListener('resize', resize);
 
-    // After keyboard fully opens, scroll input into view
-    msgInput.addEventListener('focus', () => {
-      setTimeout(() => {
-        msgInput.scrollIntoView({ block: 'end', behavior: 'smooth' });
-      }, 320);
-    });
-
-    // Reset height when keyboard closes
-    msgInput.addEventListener('blur', () => {
-      setTimeout(resize, 100);
-    });
+    msgInput.addEventListener('focus',  () => setTimeout(adjust, 50));
+    msgInput.addEventListener('blur',   () => setTimeout(() => { chat.style.bottom = '0'; }, 50));
   }
 
   initViewportHandler();
