@@ -283,12 +283,15 @@
      CHAT SCREEN
   ══════════════════════════════ */
   #chat {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 700px;
+    height: 100dvh;
     flex-direction: column;
     min-height: unset;
-    height: 100dvh;
-    max-width: 700px;
-    margin: 0 auto;
-    width: 100%;
   }
 
   /* Header */
@@ -1265,11 +1268,13 @@
       const vv = window.visualViewport;
       if (!vv) return;
       chat.style.height = vv.height + 'px';
+      chat.style.top = vv.offsetTop + 'px';
     };
 
     const reset = () => {
       if (!chat.classList.contains('active')) return;
       chat.style.height = '';
+      chat.style.top = '';
     };
 
     if (window.visualViewport) {
