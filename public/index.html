@@ -285,11 +285,12 @@
   #chat {
     position: fixed;
     top: 0;
+    bottom: 0;
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
     max-width: 700px;
-    height: 100dvh;
+    height: auto;
     flex-direction: column;
     min-height: unset;
   }
@@ -494,6 +495,7 @@
     padding: 20px;
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
     gap: 4px;
     scroll-behavior: smooth;
   }
@@ -1267,22 +1269,19 @@
       if (!chat.classList.contains('active')) return;
       const vv = window.visualViewport;
       if (!vv) return;
-      chat.style.height = vv.height + 'px';
-      chat.style.top = vv.offsetTop + 'px';
+      const kb = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+      chat.style.bottom = kb + 'px';
     };
 
     const reset = () => {
       if (!chat.classList.contains('active')) return;
-      chat.style.height = '';
-      chat.style.top = '';
+      chat.style.bottom = '';
     };
 
     if (window.visualViewport) {
       window.visualViewport.addEventListener('resize', adjust);
+      window.visualViewport.addEventListener('scroll', adjust);
     }
-
-    msgInput.addEventListener('focus', () => setTimeout(adjust, 50));
-    msgInput.addEventListener('blur',  () => setTimeout(reset, 100));
   }
 
   initViewportHandler();
@@ -1444,7 +1443,8 @@
   // ── Utilities ──────────────────────────────
   function scrollBottom() {
     const area = document.getElementById('messagesArea');
-    if (area) area.scrollTop = area.scrollHeight;
+    if (!area) return;
+    requestAnimationFrame(() => { area.scrollTop = area.scrollHeight; });
   }
 
   function esc(s) {
