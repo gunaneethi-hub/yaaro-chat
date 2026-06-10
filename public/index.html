@@ -3,28 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#0a0e17">
+<meta name="theme-color" content="#01030a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
 <title>Yaaro.chat — Chat with a Stranger</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0e17;
-    --bg2: #0f1520;
-    --bg3: #151d2e;
-    --bg4: #1a2438;
-    --accent: #4f8eff;
-    --accent2: #7b5cff;
-    --accent-glow: rgba(79,142,255,0.15);
+    --bg: #01030a;
+    --bg2: #0a0c14;
+    --bg3: #111526;
+    --bg4: #171c30;
+    --accent: #b25bfb;
+    --accent2: #602be9;
+    --accent-glow: rgba(178,91,251,0.15);
     --text: #e8edf5;
-    --text2: #8a97b0;
+    --text2: #9ba6bd;
     --text3: #4a5568;
-    --border: rgba(255,255,255,0.06);
-    --border2: rgba(79,142,255,0.2);
-    --bubble-them: #1a2438;
-    --bubble-me: #1e3a7a;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(187,62,212,0.4);
+    --bubble-them: #111526;
+    --bubble-me: #2d1060;
     --green: #2ecc71;
     --red: #e74c3c;
   }
@@ -35,12 +35,13 @@
     font-family: 'Inter', sans-serif;
     background: var(--bg);
     color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
+    height: 100dvh;
+    overflow: hidden;
   }
 
   /* ── SCREENS ── */
-  .screen { display: none; min-height: 100vh; }
+  .screen { display: none; }
+  .screen:not(#chat) { min-height: 100dvh; }
   .screen.active { display: flex; }
 
   /* ══════════════════════════════
@@ -59,55 +60,65 @@
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(79,142,255,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(79,142,255,0.04) 1px, transparent 1px);
+      linear-gradient(rgba(178,91,251,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(178,91,251,0.03) 1px, transparent 1px);
     background-size: 48px 48px;
     pointer-events: none;
   }
 
   .bg-glow {
     position: absolute;
-    width: 600px;
-    height: 600px;
+    width: 700px;
+    height: 700px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(79,142,255,0.08) 0%, transparent 70%);
-    top: 50%;
+    background: radial-gradient(circle, rgba(96,43,233,0.12) 0%, transparent 70%);
+    top: 30%;
     left: 50%;
     transform: translate(-50%, -50%);
     pointer-events: none;
   }
 
+  /* Logo icon: "y." chat bubble */
   .logo-wrap {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 48px;
+    gap: 0;
+    margin-bottom: 40px;
     animation: fadeUp 0.6s ease both;
   }
 
   .logo-icon {
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, var(--accent), var(--accent2));
-    border-radius: 12px;
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, var(--accent2), var(--accent));
+    border-radius: 22px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 20px;
-  }
-
-  .logo-text {
-    font-family: 'Syne', sans-serif;
-    font-size: 24px;
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 34px;
     font-weight: 800;
-    letter-spacing: -0.5px;
+    color: #fff;
+    box-shadow: 0 0 48px rgba(178,91,251,0.35), 0 0 120px rgba(96,43,233,0.2);
+    position: relative;
   }
 
-  .logo-text span { color: var(--accent); }
+  .logo-icon::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 22px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 12px solid var(--accent);
+  }
 
   .hero {
     text-align: center;
-    max-width: 560px;
+    max-width: 400px;
     position: relative;
     z-index: 1;
   }
@@ -116,7 +127,7 @@
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: rgba(79,142,255,0.1);
+    background: rgba(178,91,251,0.1);
     border: 1px solid var(--border2);
     border-radius: 100px;
     padding: 6px 14px;
@@ -141,11 +152,11 @@
   }
 
   .hero h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(40px, 8vw, 72px);
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: clamp(40px, 11vw, 52px);
     font-weight: 800;
     line-height: 1.05;
-    letter-spacing: -2px;
+    letter-spacing: -1px;
     margin-bottom: 20px;
     animation: fadeUp 0.6s 0.2s ease both;
   }
@@ -153,11 +164,11 @@
   .hero h1 .accent { color: var(--accent); }
 
   .hero p {
-    font-size: 17px;
+    font-size: 16px;
     color: var(--text2);
     line-height: 1.7;
     margin-bottom: 40px;
-    font-weight: 300;
+    font-weight: 400;
     animation: fadeUp 0.6s 0.3s ease both;
   }
 
@@ -170,32 +181,25 @@
   }
 
   .btn-primary {
-    background: var(--accent);
+    background: linear-gradient(90deg, #602be9 0%, #bf3fd4 100%);
     color: #fff;
-    border: none;
-    padding: 14px 32px;
-    border-radius: 12px;
+    border: 1px solid rgba(124,0,145,0.6);
+    padding: 18px 40px;
+    border-radius: 64px;
     font-family: 'Inter', sans-serif;
-    font-size: 15px;
+    font-size: 18px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     position: relative;
     overflow: hidden;
+    box-shadow: inset 1px -5px 4px rgba(0,0,0,0.25);
   }
 
-  .btn-primary::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(255,255,255,0);
-    transition: background 0.2s;
-  }
-
-  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(79,142,255,0.35); }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(178,91,251,0.45), inset 1px -5px 4px rgba(0,0,0,0.25); }
   .btn-primary:active { transform: translateY(0); }
 
   .btn-secondary {
@@ -203,7 +207,7 @@
     color: var(--text);
     border: 1px solid var(--border);
     padding: 14px 32px;
-    border-radius: 12px;
+    border-radius: 64px;
     font-family: 'Inter', sans-serif;
     font-size: 15px;
     font-weight: 500;
@@ -213,51 +217,29 @@
 
   .btn-secondary:hover { background: var(--bg4); border-color: var(--border2); }
 
-  .stats-row {
-    display: flex;
-    gap: 32px;
-    margin-top: 56px;
-    animation: fadeUp 0.6s 0.5s ease both;
-  }
-
-  .stat { text-align: center; }
-  .stat-num {
-    font-family: 'Syne', sans-serif;
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--text);
-  }
-  .stat-num span { color: var(--accent); }
-  .stat-label { font-size: 12px; color: var(--text3); margin-top: 2px; }
-
-  .stat-divider {
-    width: 1px;
-    background: var(--border);
-    align-self: stretch;
-  }
-
   .features-row {
-    display: flex;
-    gap: 12px;
-    margin-top: 56px;
-    flex-wrap: wrap;
-    justify-content: center;
-    animation: fadeUp 0.6s 0.6s ease both;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 48px;
+    max-width: 340px;
+    margin-left: auto;
+    margin-right: auto;
+    animation: fadeUp 0.6s 0.5s ease both;
   }
 
   .feature-pill {
     display: flex;
     align-items: center;
-    gap: 6px;
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 100px;
-    padding: 8px 16px;
-    font-size: 13px;
+    justify-content: center;
+    border: 1px solid var(--border2);
+    border-radius: 50px;
+    padding: 8px 20px;
+    font-size: 14px;
+    font-weight: 500;
     color: var(--text2);
+    white-space: nowrap;
   }
-
-  .feature-pill i { color: var(--accent); font-size: 14px; }
 
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
@@ -285,7 +267,7 @@
   }
 
   .interest-card h2 {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Bricolage Grotesque', sans-serif;
     font-size: 26px;
     font-weight: 700;
     margin-bottom: 8px;
@@ -375,7 +357,7 @@
   @keyframes spin { to { transform: rotate(360deg); } }
 
   .connect-title {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Bricolage Grotesque', sans-serif;
     font-size: 22px;
     font-weight: 700;
   }
@@ -407,13 +389,9 @@
      CHAT SCREEN
   ══════════════════════════════ */
   #chat {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
     flex-direction: column;
     min-height: unset;
+    height: 100dvh;
     max-width: 700px;
     margin: 0 auto;
     width: 100%;
@@ -432,7 +410,7 @@
   }
 
   .chat-logo {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Bricolage Grotesque', sans-serif;
     font-size: 18px;
     font-weight: 800;
     color: var(--accent);
@@ -513,7 +491,7 @@
   }
 
   .report-card h3 {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Bricolage Grotesque', sans-serif;
     font-size: 18px;
     font-weight: 700;
     margin-bottom: 6px;
@@ -937,7 +915,7 @@
   .end-emoji { font-size: 56px; }
 
   .end-title {
-    font-family: 'Syne', sans-serif;
+    font-family: 'Bricolage Grotesque', sans-serif;
     font-size: 28px;
     font-weight: 700;
   }
@@ -1023,51 +1001,25 @@
   <div class="bg-glow"></div>
 
   <div class="logo-wrap">
-    <div class="logo-icon">💬</div>
-    <div class="logo-text">Yaaro<span>.chat</span></div>
+    <div class="logo-icon">y.</div>
   </div>
 
   <div class="hero">
-    <div class="hero-badge">
-      <div class="pulse-dot"></div>
-      <span id="onlineBadge">—</span> strangers online now
-    </div>
+    <h1>Meet on <span class="accent">Yaaro,</span><br>Make a friend</h1>
 
-    <h1>Meet a <span class="accent">Stranger.</span><br>Make a Yaaro.</h1>
-
-    <p>Anonymous real-time chat with random people.<br>No sign up. No history. Just conversation.</p>
+    <p>Anonymous real-time chat with random people. No sign up. No history. Just conversation.</p>
 
     <div class="cta-row">
       <button class="btn-primary" onclick="showInterests()">
-        ✦ Start Chatting
+        Start chatting now ⚡
       </button>
-      <button class="btn-secondary" onclick="quickStart()">
-        Quick Start →
-      </button>
-    </div>
-
-    <div class="stats-row">
-      <div class="stat">
-        <div class="stat-num" id="onlineStatNum">—</div>
-        <div class="stat-label">Online now</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat">
-        <div class="stat-num">100<span>%</span></div>
-        <div class="stat-label">Anonymous</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat">
-        <div class="stat-num">0<span>ms</span></div>
-        <div class="stat-label">Signup time</div>
-      </div>
     </div>
 
     <div class="features-row">
-      <div class="feature-pill">🔒 No login needed</div>
-      <div class="feature-pill">⚡ Instant match</div>
-      <div class="feature-pill">🌏 India & beyond</div>
-      <div class="feature-pill">🚫 No data stored</div>
+      <div class="feature-pill">No login</div>
+      <div class="feature-pill">Instant match</div>
+      <div class="feature-pill">No data shared</div>
+      <div class="feature-pill">No history</div>
     </div>
   </div>
 </div>
@@ -1125,7 +1077,7 @@
 <div class="screen" id="chat" style="flex-direction:column">
 
   <div class="chat-header">
-    <div class="chat-logo">Y</div>
+    <div class="chat-logo">y.</div>
     <div class="stranger-info">
       <div class="stranger-name">
         <div class="online-dot"></div>
@@ -1483,9 +1435,9 @@
   }
 
   // ── visualViewport sticky ───────────────────
-  // position:fixed on #chat + adjust bottom = keyboard height.
-  // iOS: innerHeight stays fixed, visualViewport.height shrinks → diff = keyboard.
-  // Android: innerHeight already shrinks with keyboard → diff = 0, no adjustment needed.
+  // iOS: innerHeight stays fixed, visualViewport.height shrinks when keyboard opens.
+  // We set #chat height = vv.height so it never extends under the keyboard.
+  // Android: innerHeight already shrinks, so vv.height ≈ innerHeight, no-op.
   function initViewportHandler() {
     const chat     = document.getElementById('chat');
     const msgInput = document.getElementById('msgInput');
@@ -1494,17 +1446,20 @@
       if (!chat.classList.contains('active')) return;
       const vv = window.visualViewport;
       if (!vv) return;
-      const keyboardH = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
-      chat.style.bottom = keyboardH + 'px';
+      chat.style.height = vv.height + 'px';
+    };
+
+    const reset = () => {
+      if (!chat.classList.contains('active')) return;
+      chat.style.height = '';
     };
 
     if (window.visualViewport) {
       window.visualViewport.addEventListener('resize', adjust);
-      window.visualViewport.addEventListener('scroll', adjust);
     }
 
-    msgInput.addEventListener('focus',  () => setTimeout(adjust, 50));
-    msgInput.addEventListener('blur',   () => setTimeout(() => { chat.style.bottom = '0'; }, 50));
+    msgInput.addEventListener('focus', () => setTimeout(adjust, 50));
+    msgInput.addEventListener('blur',  () => setTimeout(reset, 100));
   }
 
   initViewportHandler();
