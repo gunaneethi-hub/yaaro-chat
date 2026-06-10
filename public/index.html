@@ -8,7 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
 <title>Yaaro.chat — Chat with a Stranger</title>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,700;12..96,800&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --bg: #01030a;
@@ -78,7 +78,7 @@
     pointer-events: none;
   }
 
-  /* Logo icon: "y." chat bubble */
+  /* Logo */
   .logo-wrap {
     display: flex;
     flex-direction: column;
@@ -88,33 +88,16 @@
     animation: fadeUp 0.6s ease both;
   }
 
-  .logo-icon {
-    width: 80px;
-    height: 80px;
-    background: linear-gradient(135deg, var(--accent2), var(--accent));
-    border-radius: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .logo-text {
     font-family: 'Bricolage Grotesque', sans-serif;
-    font-size: 34px;
+    font-size: 42px;
     font-weight: 800;
-    color: #fff;
-    box-shadow: 0 0 48px rgba(178,91,251,0.35), 0 0 120px rgba(96,43,233,0.2);
-    position: relative;
+    letter-spacing: -1.5px;
+    color: var(--text);
+    filter: drop-shadow(0 0 32px rgba(178,91,251,0.4));
   }
 
-  .logo-icon::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 22px;
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 6px solid transparent;
-    border-top: 12px solid var(--accent);
-  }
+  .logo-text .dot-chat { color: var(--accent); }
 
   .hero {
     text-align: center;
@@ -152,7 +135,7 @@
   }
 
   .hero h1 {
-    font-family: 'Bricolage Grotesque', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: clamp(40px, 11vw, 52px);
     font-weight: 800;
     line-height: 1.05;
@@ -245,95 +228,6 @@
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
-
-  /* ══════════════════════════════
-     INTEREST SCREEN
-  ══════════════════════════════ */
-  #interests {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 20px;
-  }
-
-  .interest-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 40px;
-    max-width: 480px;
-    width: 100%;
-    animation: fadeUp 0.4s ease both;
-  }
-
-  .interest-card h2 {
-    font-family: 'Bricolage Grotesque', sans-serif;
-    font-size: 26px;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-
-  .interest-card p {
-    color: var(--text2);
-    font-size: 14px;
-    margin-bottom: 28px;
-    line-height: 1.6;
-  }
-
-  .tag-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 28px;
-  }
-
-  .tag {
-    padding: 8px 16px;
-    border-radius: 100px;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    border: 1px solid var(--border);
-    background: var(--bg3);
-    color: var(--text2);
-    transition: all 0.2s;
-    user-select: none;
-  }
-
-  .tag:hover { border-color: var(--border2); color: var(--text); }
-
-  .tag.selected {
-    background: rgba(79,142,255,0.15);
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-
-  .nickname-row {
-    margin-bottom: 24px;
-  }
-
-  .nickname-row label {
-    display: block;
-    font-size: 13px;
-    color: var(--text2);
-    margin-bottom: 8px;
-  }
-
-  .nickname-row input {
-    width: 100%;
-    background: var(--bg3);
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 12px 16px;
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
-  .nickname-row input:focus { border-color: var(--accent); }
-  .nickname-row input::placeholder { color: var(--text3); }
 
   /* ══════════════════════════════
      CONNECTING SCREEN
@@ -1001,7 +895,7 @@
   <div class="bg-glow"></div>
 
   <div class="logo-wrap">
-    <div class="logo-icon">y.</div>
+    <span class="logo-text">yaaro<span class="dot-chat">.chat</span></span>
   </div>
 
   <div class="hero">
@@ -1010,7 +904,7 @@
     <p>Anonymous real-time chat with random people. No sign up. No history. Just conversation.</p>
 
     <div class="cta-row">
-      <button class="btn-primary" onclick="showInterests()">
+      <button class="btn-primary" onclick="startConnecting()">
         Start chatting now ⚡
       </button>
     </div>
@@ -1021,44 +915,6 @@
       <div class="feature-pill">No data shared</div>
       <div class="feature-pill">No history</div>
     </div>
-  </div>
-</div>
-
-<!-- ══ INTERESTS ══ -->
-<div class="screen" id="interests">
-  <div class="interest-card">
-    <h2>Set your vibe ✦</h2>
-    <p>Pick your interests to get matched with someone on the same wavelength. (Optional)</p>
-
-    <div class="nickname-row">
-      <label>Your nickname (anonymous)</label>
-      <input type="text" id="nicknameInput" placeholder="e.g. CoolDude99, MusicLover..." maxlength="20">
-    </div>
-
-    <div class="tag-grid" id="tagGrid">
-      <div class="tag" onclick="toggleTag(this)">🎵 Music</div>
-      <div class="tag" onclick="toggleTag(this)">🎬 Movies</div>
-      <div class="tag" onclick="toggleTag(this)">🏏 Cricket</div>
-      <div class="tag" onclick="toggleTag(this)">💻 Coding</div>
-      <div class="tag" onclick="toggleTag(this)">📸 Photography</div>
-      <div class="tag" onclick="toggleTag(this)">🎮 Gaming</div>
-      <div class="tag" onclick="toggleTag(this)">✈️ Travel</div>
-      <div class="tag" onclick="toggleTag(this)">📚 Books</div>
-      <div class="tag" onclick="toggleTag(this)">🍕 Food</div>
-      <div class="tag" onclick="toggleTag(this)">🎨 Art</div>
-      <div class="tag" onclick="toggleTag(this)">💪 Fitness</div>
-      <div class="tag" onclick="toggleTag(this)">🎭 Tamil Cinema</div>
-      <div class="tag" onclick="toggleTag(this)">🎤 Singing</div>
-      <div class="tag" onclick="toggleTag(this)">📈 Stocks</div>
-      <div class="tag" onclick="toggleTag(this)">🤖 AI</div>
-    </div>
-
-    <button class="btn-primary" style="width:100%; justify-content:center" onclick="startConnecting()">
-      Find my Yaaro →
-    </button>
-    <button class="btn-secondary" style="width:100%; margin-top:10px; text-align:center" onclick="showScreen('landing')">
-      ← Back
-    </button>
   </div>
 </div>
 
@@ -1094,9 +950,6 @@
 
   <div class="messages" id="messagesArea">
     <div class="system-msg">🔒 You're now connected to a stranger. Be kind!</div>
-    <div class="common-banner" id="commonBanner" style="display:none">
-      ✦ You both like: <strong id="commonTags"></strong>
-    </div>
     <div class="date-sep">Today</div>
     <div class="typing-row" id="typingRow" style="display:none">
       <div class="msg-avatar" style="background:#1a2438;font-size:16px">👤</div>
@@ -1180,7 +1033,6 @@
   const socket = io();
 
   // ── State ──────────────────────────────────
-  let selectedTags = [];
   let isConnected = false;
   let isTyping = false;
   let typingTimer = null;
@@ -1243,9 +1095,9 @@
     if (sub) sub.textContent = 'Waiting for someone to join...';
   });
 
-  socket.on('matched', ({ strangerName, commonTags }) => {
+  socket.on('matched', ({ strangerName }) => {
     isConnected = true;
-    initChat(strangerName, commonTags);
+    initChat(strangerName);
     showScreen('chat');
     resetInput();
   });
@@ -1276,49 +1128,23 @@
     window.scrollTo(0, 0);
   }
 
-  function showInterests() { showScreen('interests'); }
-
-  function quickStart() {
-    selectedTags = [];
-    document.getElementById('nicknameInput').value = '';
-    startConnecting();
-  }
-
   function cancelQueue() {
     socket.emit('end');
     showScreen('landing');
   }
 
-  // ── Tag selection ──────────────────────────
-  function toggleTag(el) {
-    el.classList.toggle('selected');
-    const text = el.textContent.trim();
-    if (el.classList.contains('selected')) {
-      selectedTags.push(text);
-    } else {
-      selectedTags = selectedTags.filter(t => t !== text);
-    }
-  }
-
   // ── Connection flow ────────────────────────
   function startConnecting() {
-    const nicknameInput = document.getElementById('nicknameInput');
-    const nickname = (nicknameInput && nicknameInput.value.trim()) || '';
-
     showScreen('connecting');
     const sub = document.getElementById('connectSub');
     if (sub) sub.textContent = 'Searching for a Yaaro...';
-
-    socket.emit('join', { nickname, tags: selectedTags });
+    socket.emit('join', {});
   }
 
-  function initChat(strangerName, commonTags) {
+  function initChat(strangerName) {
     const area = document.getElementById('messagesArea');
     area.innerHTML = `
       <div class="system-msg">🔒 You're now connected to a stranger. Be kind!</div>
-      <div class="common-banner" id="commonBanner" style="display:none">
-        ✦ You both like: <strong id="commonTags"></strong>
-      </div>
       <div class="date-sep">Today</div>
       <div class="typing-row" id="typingRow" style="display:none">
         <div class="msg-avatar" style="background:#1a2438;font-size:16px">👤</div>
@@ -1327,15 +1153,6 @@
 
     document.getElementById('strangerName').textContent = strangerName;
     document.getElementById('strangerStatus').textContent = 'Online · Anonymous';
-
-    if (commonTags && commonTags.length > 0) {
-      const banner = document.getElementById('commonBanner');
-      const tagsEl = document.getElementById('commonTags');
-      if (banner && tagsEl) {
-        tagsEl.textContent = commonTags.slice(0, 3).join(', ');
-        banner.style.display = 'flex';
-      }
-    }
   }
 
   // ── Emoji picker ───────────────────────────
