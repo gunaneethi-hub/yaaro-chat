@@ -4,6 +4,7 @@
     <loc>https://yaaro.chat/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <lastmod>2026-06-13</lastmod>
   </url>
   <url>
     <loc>https://yaaro.chat/blog/omegle-alternatives.html</loc>
@@ -22,5 +23,17 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <lastmod>2026-06-01</lastmod>
+  </url>
+  <url>
+    <loc>https://yaaro.chat/privacy.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <lastmod>2026-06-13</lastmod>
+  </url>
+  <url>
+    <loc>https://yaaro.chat/terms.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <lastmod>2026-06-13</lastmod>
   </url>
 </urlset>
