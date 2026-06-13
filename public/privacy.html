@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#01030a">
+<title>Privacy Policy — Yaaro.chat</title>
+
+<!-- SEO -->
+<meta name="description" content="Yaaro.chat Privacy Policy. Learn how we handle your data — no accounts, no chat history, no personal information collected.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://yaaro.chat/privacy.html">
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/assets/yaaro-chat-fav.svg">
+<link rel="alternate icon" type="image/png" href="/assets/logo.png">
+<link rel="apple-touch-icon" href="/assets/logo.png">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-5GGBXVMWSM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-5GGBXVMWSM');
+</script>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #01030a;
+    --text: #e8edf5;
+    --text2: #9ba6bd;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  .lp-nav-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 12px 20px 0;
+    position: sticky;
+    top: 8px;
+    z-index: 102;
+  }
+
+  .lp-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+    height: 64px;
+    border-radius: 70px;
+    border: 1px solid rgba(255,255,255,0.06);
+    background: rgba(18,17,22,0.7);
+    backdrop-filter: blur(60px);
+    -webkit-backdrop-filter: blur(60px);
+    box-shadow:
+      inset 0 1.5px 0 rgba(255,255,255,0.22),
+      inset 0 -1px 0 rgba(255,255,255,0.1),
+      0 1px 0 rgba(255,255,255,0.06);
+    width: 100%;
+    max-width: 521px;
+    position: relative;
+  }
+
+  .lp-nav-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .lp-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 29px;
+  }
+
+  .lp-nav-links a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text2);
+    text-decoration: none;
+    transition: color 0.2s;
+    cursor: pointer;
+  }
+
+  .lp-nav-links a:hover { color: #fff; }
+
+  /* ── PAGE CONTENT ── */
+  .page-wrap {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 60px 28px 80px;
+  }
+
+  .page-inner {
+    width: 100%;
+    max-width: 760px;
+  }
+
+  .page-title {
+    font-size: 38px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 44px;
+    margin-bottom: 8px;
+  }
+
+  .page-date {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--text2);
+    line-height: 24px;
+    margin-bottom: 48px;
+  }
+
+  .page-body {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .page-section h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 28px;
+    margin-bottom: 10px;
+  }
+
+  .page-section p,
+  .page-section li {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--text2);
+    line-height: 28px;
+  }
+
+  .page-section ul {
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: 8px;
+  }
+
+  .page-section a {
+    color: #a78bfa;
+    text-decoration: none;
+  }
+
+  .page-section a:hover { text-decoration: underline; }
+
+  /* ── FOOTER ── */
+  .lp-footer {
+    width: 100%;
+    padding: 20px 40px;
+    margin-top: 30px;
+    background: var(--bg);
+  }
+
+  .lp-footer-inner { max-width: 1280px; margin: 0 auto; }
+
+  .lp-footer-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .lp-footer-logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+  }
+
+  .lp-footer-links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .lp-footer-links a {
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text2);
+    text-decoration: none;
+    line-height: 30px;
+    transition: color 0.2s;
+    white-space: nowrap;
+  }
+
+  .lp-footer-links a:hover { color: #fff; }
+
+  .lp-footer-dot {
+    width: 4px;
+    height: 4px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 30px;
+    flex-shrink: 0;
+  }
+
+  .lp-footer-bottom {
+    border-top: 1px solid rgba(47,52,64,0.6);
+    padding-top: 5px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .lp-footer-copy {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--text2);
+    line-height: 30px;
+    opacity: 0.5;
+  }
+
+  /* ── HAMBURGER & MOBILE NAV ── */
+  .lp-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 2px;
+  }
+
+  .lp-hamburger span {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    transition: all 0.25s;
+  }
+
+  .lp-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .lp-hamburger.open span:nth-child(2) { opacity: 0; }
+  .lp-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  .lp-menu-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    background: rgba(10,14,23,0.45);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
+  }
+  .lp-menu-backdrop.open { display: block; }
+
+  .lp-mobile-menu {
+    display: none;
+    position: fixed;
+    top: 92px;
+    left: 16px;
+    right: 16px;
+    background: rgba(18,17,22,0.92);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    z-index: 103;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .lp-mobile-menu.open { display: flex; }
+
+  .lp-mobile-menu a {
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--text2);
+    text-decoration: none;
+    padding: 20px 0;
+    text-align: center;
+    transition: color 0.2s;
+  }
+
+  .lp-mobile-menu a + a { border-top: 1px solid rgba(255,255,255,0.07); }
+  .lp-mobile-menu a:hover { color: #fff; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    .lp-nav-links { display: none; }
+    .lp-hamburger { display: flex; }
+    .lp-nav-wrap { padding: 12px 16px 0; top: 8px; }
+    .lp-nav { padding: 0 20px; max-width: 100%; }
+    .lp-nav-logo img { width: 80px; height: 24px; }
+    .page-wrap { padding: 40px 20px 60px; }
+    .page-title { font-size: 28px; line-height: 36px; }
+    .lp-footer { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav class="lp-nav-wrap">
+  <div class="lp-nav">
+    <a class="lp-nav-logo" href="/"><img src="/assets/yaaro-logo.svg" alt="Yaaro.chat" width="100" height="30"></a>
+    <div class="lp-nav-links">
+      <a href="/">Overview</a>
+      <a href="/#how">How it works</a>
+      <a href="/#faq">FAQ</a>
+      <a href="/#blogs">Blog</a>
+    </div>
+    <button class="lp-hamburger" id="hamburgerBtn" onclick="toggleMobileMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<div class="lp-menu-backdrop" id="menuBackdrop" onclick="toggleMobileMenu()"></div>
+<div class="lp-mobile-menu" id="mobileMenu">
+  <a href="/">Overview</a>
+  <a href="/#how">How it works</a>
+  <a href="/#faq">FAQ</a>
+  <a href="/#blogs">Blog</a>
+</div>
+
+<!-- Content -->
+<div class="page-wrap">
+  <div class="page-inner">
+
+    <h1 class="page-title">Privacy Policy</h1>
+    <p class="page-date">Last updated: June 2026</p>
+
+    <div class="page-body">
+
+      <div class="page-section">
+        <h2>Overview</h2>
+        <p>Yaaro.chat is built around a simple principle: you should be able to have a conversation without giving up your identity. We collect as little data as possible and we never store your conversations.</p>
+      </div>
+
+      <div class="page-section">
+        <h2>What We Do Not Collect</h2>
+        <ul>
+          <li>Your name, email address, phone number, or any personal identifiers</li>
+          <li>Your chat messages or conversation history</li>
+          <li>Your IP address in any persistent or identifiable form</li>
+          <li>Photos, files, or media</li>
+          <li>Your device contacts or location</li>
+        </ul>
+      </div>
+
+      <div class="page-section">
+        <h2>What We Do Collect</h2>
+        <p>To keep the service running and improve it, we collect limited anonymous usage data:</p>
+        <ul>
+          <li><strong style="color:#e8edf5;font-weight:500;">Analytics</strong> — We use Google Analytics to understand aggregate traffic patterns (page views, session counts, device types). This data is anonymised and cannot be used to identify you.</li>
+          <li><strong style="color:#e8edf5;font-weight:500;">Nicknames</strong> — You choose a nickname to start a chat. It is used only for the duration of that session and is not stored after the chat ends.</li>
+          <li><strong style="color:#e8edf5;font-weight:500;">Technical session data</strong> — Temporary data (such as a session token) required to match you with a chat partner. This data exists only while the session is active and is discarded when you disconnect.</li>
+        </ul>
+      </div>
+
+      <div class="page-section">
+        <h2>Cookies</h2>
+        <p>We do not use tracking cookies or advertising cookies. Google Analytics may set cookies to measure aggregate usage. You can disable cookies in your browser settings at any time.</p>
+      </div>
+
+      <div class="page-section">
+        <h2>Third-Party Services</h2>
+        <p>We use Google Analytics (operated by Google LLC) for anonymous usage statistics. Google's privacy policy applies to data processed by their service: <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">policies.google.com/privacy</a>.</p>
+        <p>We do not sell, share, or transfer your data to any other third parties.</p>
+      </div>
+
+      <div class="page-section">
+        <h2>Chat Messages</h2>
+        <p>Messages you send during a chat session are relayed in real time to your matched partner. They are not logged, stored, or accessible to us after transmission. Once a chat session ends, the messages are gone permanently.</p>
+      </div>
+
+      <div class="page-section">
+        <h2>Children's Privacy</h2>
+        <p>Yaaro.chat is intended for users aged 18 and over. We do not knowingly collect any information from anyone under 18. If you believe a minor is using the service, please contact us so we can take appropriate action.</p>
+      </div>
+
+      <div class="page-section">
+        <h2>Changes to This Policy</h2>
+        <p>We may update this policy from time to time. Any changes will be posted on this page with an updated date. Continued use of the service after changes are posted constitutes acceptance of the updated policy.</p>
+      </div>
+
+      <div class="page-section">
+        <h2>Contact</h2>
+        <p>Questions about this privacy policy? Reach us at <a href="mailto:hello@yaaro.chat">hello@yaaro.chat</a>.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="lp-footer">
+  <div class="lp-footer-inner">
+    <div class="lp-footer-top">
+      <a class="lp-footer-logo" href="/"><img src="/assets/yaaro-logo.svg" alt="Yaaro.chat" width="100" height="30"></a>
+      <div class="lp-footer-links">
+        <a href="/#blogs">Blog</a>
+        <div class="lp-footer-dot"></div>
+        <a href="/privacy.html">Privacy policy</a>
+        <div class="lp-footer-dot"></div>
+        <a href="/terms.html">Terms of service</a>
+      </div>
+    </div>
+    <div class="lp-footer-bottom">
+      <p class="lp-footer-copy">© 2026 Yaaro.chat. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleMobileMenu() {
+    const menu     = document.getElementById('mobileMenu');
+    const btn      = document.getElementById('hamburgerBtn');
+    const backdrop = document.getElementById('menuBackdrop');
+    const open = menu.classList.toggle('open');
+    btn.classList.toggle('open', open);
+    backdrop.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+</script>
+</body>
+</html>
