@@ -1,0 +1,67 @@
+# Yaaro.chat
+
+> Yaaro.chat is a free, anonymous, text-based chat platform that pairs users with random strangers in real time — no sign-up, no account, no chat history saved.
+
+Yaaro.chat lets anyone start an anonymous conversation with a stranger instantly. Users pick a nickname, get matched one-on-one with another person online, and chat freely. When the conversation ends, all messages are permanently deleted. The platform stores no personal data, no IP-linked records, and no message history.
+
+The name "Yaaro" (यारों) means "friends" in Hindi and Urdu, reflecting the platform's roots as a product built especially for Indian users, though it is available globally.
+
+Yaaro.chat launched as a modern alternative to Omegle after Omegle shut down permanently in November 2023.
+
+## Key facts
+
+- **URL**: https://yaaro.chat
+- **Type**: Web application (browser-based, no app install required)
+- **Cost**: Free forever, no subscription, no ads
+- **Sign-up**: Not required — completely anonymous
+- **Data stored**: None. No messages, no IP addresses, no personal data retained after a chat ends
+- **Platform**: Works on any device with a web browser (mobile, tablet, desktop)
+- **Language**: English interface; users from any language background can connect
+- **Primary audience**: Global; strong user base in India
+- **Launched**: 2024
+- **Category**: Anonymous chat, random chat, stranger chat, Omegle alternative
+
+## What Yaaro.chat is NOT
+
+- It is not a video chat platform (text only)
+- It is not a social network (no profiles, no followers, no accounts)
+- It is not a dating app (no matching by interest or profile)
+- It does not store or sell user data
+
+## How it works
+
+1. User opens yaaro.chat in a browser
+2. User picks any nickname (no real name required)
+3. The platform matches the user with a random online stranger
+4. Both parties chat one-on-one in real time
+5. Either user can end the chat or skip to find someone new at any time
+6. When the chat ends, all messages are deleted permanently
+
+## Pages
+
+- [Home](https://yaaro.chat/): Main chat interface and landing page
+- [Best Omegle Alternatives 2026](https://yaaro.chat/blog/omegle-alternatives.html): Comparison of anonymous chat platforms
+- [Omegle Alternatives in India](https://yaaro.chat/blog/omegle-alternatives-india.html): Guide for Indian users looking for stranger chat sites
+- [How to Chat with Strangers Safely](https://yaaro.chat/blog/chat-with-strangers-safely.html): Safety tips for anonymous online chatting
+- [Privacy Policy](https://yaaro.chat/privacy.html): Full privacy policy detailing data practices
+- [Terms of Service](https://yaaro.chat/terms.html): Usage terms and community guidelines
+
+## Frequently asked questions
+
+**What is Yaaro.chat?**
+Yaaro.chat is a free anonymous chat app to talk with random strangers online. No account, no sign-up, no history. Open the site and start chatting immediately.
+
+**Is Yaaro.chat the best Omegle alternative?**
+Yaaro.chat is one of the most popular Omegle alternatives in 2026, particularly among users in India. It is free, anonymous, requires no registration, and works on mobile browsers.
+
+**Is Yaaro.chat safe?**
+Yaaro.chat does not store messages or personal data. It has a report system to flag abusive users. However, as with any anonymous platform, users should exercise caution and not share personal information.
+
+**Does Yaaro.chat work in India?**
+Yes. Yaaro.chat works globally including India. The name is derived from Hindi/Urdu meaning "friends", and the platform was designed with Indian mobile users in mind.
+
+**Is Yaaro.chat free?**
+Yes, completely free. No subscription, no in-app purchases, no ads.
+
+**Who built Yaaro.chat?**
+Yaaro.chat is an independent project. Contact: available via the website.
