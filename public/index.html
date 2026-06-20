@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
-<title>Yaaro.chat — Free Anonymous Chat with Strangers | Best Omegle Alternative 2026</title>
+<title>Yaaro.chat — Anonymous Chat with Strangers | Omegle Alternative</title>
 
 <!-- SEO -->
 <meta name="description" content="Yaaro.chat is a free anonymous chat app to talk with random strangers online. No sign up, no account, no history. The best Omegle alternative in 2026 — instant, private, and free forever.">
@@ -25,17 +25,17 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://yaaro.chat">
 <meta property="og:site_name" content="Yaaro.chat">
-<meta property="og:title" content="Yaaro.chat — Free Anonymous Chat with Strangers | Best Omegle Alternative 2026">
+<meta property="og:title" content="Yaaro.chat — Anonymous Chat with Strangers | Omegle Alternative">
 <meta property="og:description" content="Free anonymous chat with random strangers. No sign up, no account, no history. The best Omegle alternative in 2026 — instant, private, and free forever.">
-<meta property="og:image" content="https://yaaro.chat/assets/og-image.png">
+<meta property="og:image" content="https://yaaro.chat/assets/yaaro-og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Yaaro.chat — Free Anonymous Chat with Strangers | Best Omegle Alternative 2026">
+<meta name="twitter:title" content="Yaaro.chat — Anonymous Chat with Strangers | Omegle Alternative">
 <meta name="twitter:description" content="Free anonymous chat with random strangers. No sign up, no account, no history. The best Omegle alternative in 2026.">
-<meta name="twitter:image" content="https://yaaro.chat/assets/og-image.png">
+<meta name="twitter:image" content="https://yaaro.chat/assets/yaaro-og.png">
 
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-5GGBXVMWSM"></script>
@@ -320,7 +320,7 @@
     color: var(--text2);
     line-height: 28px;
     text-align: center;
-    max-width: 375px;
+    max-width: 440px;
     margin-top: 20px;
   }
 
@@ -1898,7 +1898,7 @@
       <span class="lp-badge-text">100% anonymous &amp; Private</span>
     </div>
     <h1 class="lp-hero-title">Meet on Yaaro.<br><span style="color:#9ba6bd">Make a friend.</span></h1>
-    <p class="lp-hero-sub">Free anonymous chat with random strangers — no sign up, no account, no history. The best Omegle alternative in 2026.</p>
+    <p class="lp-hero-sub">Instant anonymous chat with random strangers online. No tracking, no history, no drama.<br>Meet someone new right now.</p>
     <div class="lp-hero-cta">
       <button class="lp-btn-primary" onclick="startConnecting()">
         Start chatting now ⚡
@@ -2121,7 +2121,7 @@
   <div class="nickname-content">
     <div class="nickname-wrap">
       <img class="nickname-icon" src="/assets/yaaro-chat-fav.svg" alt="">
-      <h1 class="nickname-title">Chat with<br><span style="color:#9ba6bd">Yaaro?</span></h1>
+      <h2 class="nickname-title">Chat with<br><span style="color:#9ba6bd">Yaaro?</span></h2>
       <div class="nickname-input-wrap">
         <input
           class="nickname-input"
@@ -2332,6 +2332,7 @@
   // ── Landing nav helpers ────────────────────
   function scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+    history.pushState(null, '', location.pathname);
   }
 
   function scrollToSection(id) {
@@ -2340,6 +2341,7 @@
     const offset = 100;
     const top = el.getBoundingClientRect().top + window.scrollY - offset;
     window.scrollTo({ top, behavior: 'smooth' });
+    history.pushState(null, '', '#' + id);
   }
 
   // ── Mobile menu ────────────────────────────
@@ -2620,7 +2622,7 @@
     const size = 45 + Math.random() * 55;
     const maxX = Math.max(container.offsetWidth - size - 10, 10);
     const x = 10 + Math.random() * maxX;
-    const speed = 0.9 + Math.random() * 1.4;
+    const speed = 0.4 + Math.random() * 0.7;
     const tint = BUBBLE_COLORS[Math.floor(Math.random() * BUBBLE_COLORS.length)];
     const b = document.createElement('div');
     b.className = 'bubble-obj';
